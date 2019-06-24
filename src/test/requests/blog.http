@@ -5,28 +5,7 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-GET http://localhost:8080/api/user/1
+GET http://localhost:8080/blog/list
 Accept: application/json
 
 ###
-
-POST http://localhost:8080/api/login
-Content-Type: application/json
-
-{"name": "placeholder", "password": "01kHV1K7qtp6Vp960GpH"}
-
-###
-
-POST http://localhost:8080/api/login?name=admin&password=01kHV1K7qtp6Vp960GpH
-Content-Type: application/x-www-form-urlencoded
-
-###
-
-POST http://localhost:8080/api/login
-Content-Type: application/json
-
-{}
-
-###
-
-# "01kHV1K7qtp6Vp960GpH"
