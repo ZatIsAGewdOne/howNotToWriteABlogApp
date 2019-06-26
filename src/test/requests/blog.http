@@ -14,6 +14,7 @@ Accept: application/json
 POST http://localhost:8080/blog/create
 Content-Type: application/json
 Accept: application/json
+JSESSIONID=CED0662D4FBDF222D5AC34990B995966
 
 {
   "userId": 2,
@@ -26,7 +27,7 @@ Accept: application/json
 PUT http://localhost:8080/blog/update?id=1
 Content-Type: application/json
 Accept: application/json
-Cookie: JSESSIONID=EB4DDFF88F5D8E3DAA2DDD4AD5C5FCBF
+JSESSIONID=CED0662D4FBDF222D5AC34990B995966
 
 {
   "blogDate": "2019-06-24",

@@ -3,16 +3,18 @@ package blogApp.api;
 import blogApp.database.UserRepository;
 import blogApp.database.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("user")
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService {
 
     @Autowired
@@ -34,6 +36,8 @@ public class UserService {
         if (foundUser != null) {
             System.out.println("Name already in use! Please try again!");
         }
+
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         return userRepository.save(user);
     }
 
