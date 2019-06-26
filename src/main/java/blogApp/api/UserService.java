@@ -2,10 +2,7 @@ package blogApp.api;
 
 import blogApp.database.UserRepository;
 import blogApp.database.entities.User;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(value = "{id}", produces = "application/json")
+    @GetMapping(value = "{id}")
     public Optional<User> getUser(@PathVariable int id) {
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()) {
@@ -31,12 +28,19 @@ public class UserService {
         return user;
     }
 
+    @PostMapping("create")
+    public User createUser(@RequestBody User user) {
+        User foundUser = userRepository.findByName(user.getName());
+        if (foundUser != null) {
+            System.out.println("Name already in use! Please try again!");
+        }
+        return userRepository.save(user);
+    }
+
     @PostMapping(value = "login")
-    public void login(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") String name, @RequestParam("password") String password) {
+    public void login(HttpServletResponse response, @RequestParam String name, @RequestParam String password) {
         User user = userRepository.findByName(name);
         if(user != null && BCrypt.checkpw(password, user.getPassword())) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
             System.out.println(user.getName() + " has logged in!");
             response.setStatus(200);
         } else {

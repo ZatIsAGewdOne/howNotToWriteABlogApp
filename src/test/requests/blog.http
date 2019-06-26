@@ -5,7 +5,38 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-GET http://localhost:8080/blog/list
+GET http://localhost:8080/blog/list?pageNo=0
 Accept: application/json
+
+
+###
+
+POST http://localhost:8080/blog/create
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userId": 2,
+  "blogDate": "2019-01-15",
+  "blogText": "Wingardium leviosa"
+}
+
+###
+
+PUT http://localhost:8080/blog/update?id=1
+Content-Type: application/json
+Accept: application/json
+Cookie: JSESSIONID=EB4DDFF88F5D8E3DAA2DDD4AD5C5FCBF
+
+{
+  "blogDate": "2019-06-24",
+  "blogText": "This text has been redacted AGAIN!",
+  "userId": 1
+}
+
+###
+
+DELETE http://localhost:8080/blog/delete?id=11
+Accept: application/x-www-form-urlencoded
 
 ###
