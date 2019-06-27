@@ -37,18 +37,20 @@ public class UserService {
             System.out.println("Name already in use! Please try again!");
         }
 
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12)));
         return userRepository.save(user);
     }
 
     @PostMapping(value = "login")
-    public void login(HttpServletResponse response, @RequestParam String name, @RequestParam String password) {
+    public void login(HttpServletResponse response, @RequestParam String name, @RequestParam String password) throws Exception {
         User user = userRepository.findByName(name);
         if(user != null && BCrypt.checkpw(password, user.getPassword())) {
             System.out.println(user.getName() + " has logged in!");
+            response.getWriter().println("<h1>Welcome, " + user.getName() + "! </h1>");
             response.setStatus(200);
         } else {
             System.out.println("Access denied!");
+            response.getWriter().println("<h1>Access denied!</h1>");
             response.setStatus(401);
         }
     }
