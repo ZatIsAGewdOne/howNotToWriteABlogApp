@@ -6,6 +6,8 @@ import blogApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -32,7 +34,7 @@ public class UserAPI {
     public User getUser(@PathVariable int id) {
         User user = userService.getUserById(id);
         if(user == null) {
-            System.out.println("User not found!");
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         return user;

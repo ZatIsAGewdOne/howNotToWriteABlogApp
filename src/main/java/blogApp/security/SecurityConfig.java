@@ -90,10 +90,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .exceptionHandling()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/blog/list").permitAll()
+                .antMatchers("/logout").authenticated()
                 .anyRequest().authenticated()
 
                 .and()
