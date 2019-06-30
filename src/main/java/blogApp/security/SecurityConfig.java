@@ -92,10 +92,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/blog/list").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/user/login")
 
                 .and()
                 .logout().logoutSuccessUrl("/");

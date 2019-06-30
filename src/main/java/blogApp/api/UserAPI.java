@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -20,8 +21,11 @@ import java.util.List;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserAPI {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserAPI(UserService userService) {
+        this.userService = userService;
+    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "{id}")
@@ -46,6 +50,16 @@ public class UserAPI {
         return userService.createUser(user);
     }
 
+    @PostMapping("login")
+    public void login(@RequestBody User user) {
+        User foundUser = userService.findUserEntity(user);
+        if(foundUser == null || !BCrypt.checkpw(user.getPassword(), foundUser.getPassword())) {
+            System.out.println("Access denied!");
+        } else {
+            System.out.println(user.getUsername() + " has logged in!");
+        }
+    }
+
 //    @PostMapping(value = "login")
 //    public void login(HttpServletResponse response, @RequestParam String name, @RequestParam String password) throws Exception {
 //        User user = userService.getUserByName(name);
@@ -62,10 +76,10 @@ public class UserAPI {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("blog")
-    public List<BlogAndUser> callOwnBlogs(String username) {
-        User user = userService.getUserByName(username);
+    public Collection<BlogAndUser> callOwnBlogs(@RequestParam int id) {
+        User user = userService.getUserById(id);
         if(user == null) throw new UsernameNotFoundException("Access denied!");
 
-        return userService.getAllBlogsByUser(user.getUsername());
+        return userService.getAllBlogsByUserId(user.getId());
     }
 }

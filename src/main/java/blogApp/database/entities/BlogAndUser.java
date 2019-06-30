@@ -6,12 +6,14 @@ public class BlogAndUser {
 
     private String blogText;
     private LocalDate blogDate;
-    private User user;
+    private String username;
+    private int userId;
 
-    public BlogAndUser(String blogText, LocalDate blogDate, User user) {
+    public BlogAndUser(String blogText, LocalDate blogDate, String username, int userId) {
         this.blogText = blogText;
         this.blogDate = blogDate;
-        this.user = user;
+        this.username = username;
+        this.userId = userId;
     }
 
     public String getBlogText() {
@@ -30,11 +32,19 @@ public class BlogAndUser {
         this.blogDate = blogDate;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

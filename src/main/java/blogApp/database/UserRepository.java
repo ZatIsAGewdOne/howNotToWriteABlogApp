@@ -9,5 +9,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // This implements CRUD functionality to User table in database
 
     User findByUsername(String username);
-
 }

@@ -6,7 +6,7 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 GET http://localhost:8080/user/1
-Cookie: JSESSIONID=8980F48F2E43C0D6436751356F9AF028
+Cookie: JSESSIONID=16B43DB34DCB0E0F07C370EE9A691696
 Accept: application/json
 
 ###
@@ -22,19 +22,32 @@ Accept: application/json
 
 ###
 
-POST http://localhost:8080/login?username=admin&password=correct#Graphs1
-Content-Type: application/x-www-form-urlencoded
+POST http://localhost:8080/user/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}
 
 ###
 
 POST http://localhost:8080/user/create
 Content-Type: application/json
 Accept: application/json
+Cookie: JSESSIONID=8980F48F2E43C0D6436751356F9AF028
 
 {
   "username": "testing",
   "password": "testing"
 }
+
+###
+
+GET http://localhost:8080/user/blog?username=user
+Accept: application/json
+Cookie: JSESSIONID=2333F7A6220D51F672C4281A67923EE1
 
 ###
 

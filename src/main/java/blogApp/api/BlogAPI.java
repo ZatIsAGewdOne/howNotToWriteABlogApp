@@ -17,8 +17,11 @@ import java.util.List;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class BlogAPI {
 
-    @Autowired
-    private BlogService blogService;
+    private final BlogService blogService;
+
+    public BlogAPI(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     // Returns a list of all the blogs in db.
     @PreAuthorize("permitAll()")

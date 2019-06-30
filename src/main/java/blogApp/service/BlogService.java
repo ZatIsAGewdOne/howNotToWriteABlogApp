@@ -14,8 +14,11 @@ import java.util.List;
 @Service
 public class BlogService {
 
-    @Autowired
-    BlogRepository blogRepository;
+    private final BlogRepository blogRepository;
+
+    public BlogService(BlogRepository blogRepository) {
+        this.blogRepository = blogRepository;
+    }
 
     public List<Blog> getBlogList() {
         return blogRepository.findAll();
