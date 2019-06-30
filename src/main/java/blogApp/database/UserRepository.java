@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Integer> {
     // This implements CRUD functionality to User table in database
 
-    User findByName(String name);
-    User findDistinctByName(String name);
+    User findByUsername(String username);
+
 }
